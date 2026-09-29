@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lizbeth &amp; Me</title>
+    <style>
+      :root {
+        --bg: #fff8f4;
+        --card: rgba(255, 248, 244, 0.88);
+        --text: #5c3a41;
+        --accent: #ff7aa2;
+        --accent-2: #f4b183;
+        --accent-3: #8d6bbf;
+      }
+
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--text);
+        background: linear-gradient(135deg, #fff7f3 0%, #ffe9ee 45%, #fef4e8 100%);
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .petals {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .petals span {
+        position: absolute;
+        display: block;
+        width: 14px;
+        height: 14px;
+        background: rgba(255, 122, 162, 0.35);
+        border-radius: 0 100% 0 100%;
+        animation: drift 14s linear infinite;
+        opacity: 0.8;
+      }
+      .petals span:nth-child(2n) { background: rgba(244, 177, 131, 0.4); }
+      .petals span:nth-child(3n) { background: rgba(141, 107, 191, 0.25); }
+
+      @keyframes drift {
+        0% { transform: translate3d(0, -20px, 0) rotate(0deg); opacity: 0; }
+        10% { opacity: 1; }
+        100% { transform: translate3d(20vw, 110vh, 0) rotate(360deg); opacity: 0; }
+      }
+
+      .page {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 24px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 24px;
+        align-items: center;
+        padding: 26px 0 20px;
+      }
+
+      .hero-card, .card, .note {
+        background: var(--card);
+        border: 1px solid rgba(255, 122, 162, 0.16);
+        backdrop-filter: blur(9px);
+        box-shadow: 0 16px 38px rgba(120, 70, 100, 0.12);
+        border-radius: 24px;
+      }
+
+      .hero-card { padding: 32px; }
+      .eyebrow {
+        display: inline-block;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: #ffe3eb;
+        color: #b95b76;
+        font-weight: 700;
+        font-size: 0.9rem;
+        margin-bottom: 12px;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 4vw, 3rem);
+        line-height: 1.15;
+        margin: 0 0 14px;
+      }
+
+      .hero p { font-size: 1.04rem; line-height: 1.7; margin: 0 0 18px; }
+      .countdown {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+        margin: 16px 0 18px;
+      }
+      .time-box {
+        text-align: center;
+        padding: 10px 8px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #fff4f8, #ffe7d5);
+        border: 1px solid rgba(255, 122, 162, 0.18);
+      }
+      .time-box span {
+        display: block;
+        font-size: 1.25rem;
+        font-weight: 800;
+      }
+      .time-box small { color: #8a6470; font-size: 0.76rem; text-transform: uppercase; }
+
+      .button-row { display: flex; gap: 10px; flex-wrap: wrap; }
+      .btn {
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+        padding: 12px 16px;
+        border-radius: 999px;
+        font-weight: 700;
+        display: inline-block;
+      }
+      .btn-primary { background: linear-gradient(135deg, var(--accent), #ff93af); color: white; }
+      .btn-secondary { background: #fff; color: var(--text); border: 1px solid #f3d7de; }
+
+      .illustration {
+        padding: 24px;
+        min-height: 330px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .gif-art {
+        width: 220px;
+        height: 220px;
+        border-radius: 12px;
+        object-fit: cover;
+        border: 0;
+      }
+
+      h1.no-wrap { white-space: nowrap; }
+
+      .heart {
+        width: 220px;
+        height: 220px;
+        background: linear-gradient(135deg, #ff7aa2, #ff4d79);
+        transform: rotate(45deg);
+        border-radius: 40px;
+        position: relative;
+        animation: float 3.2s ease-in-out infinite;
+      }
+      .heart::before, .heart::after {
+        content: "";
+        position: absolute;
+        width: 220px;
+        height: 220px;
+        background: inherit;
+        border-radius: 50%;
+      }
+      .heart::before { left: -110px; top: 0; }
+      .heart::after { left: 0; top: -110px; }
+
+      @keyframes float {
+        0%, 100% { transform: rotate(45deg) translateY(0); }
+        50% { transform: rotate(45deg) translateY(-10px); }
+      }
+
+      .section-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 12px;
+      }
+      .card { padding: 20px; }
+      .card h3 { margin-top: 0; }
+      .note { margin-top: 20px; padding: 24px; font-size: 1.05rem; line-height: 1.8; }
+      .note blockquote { margin: 0; font-size: 1.1rem; }
+      footer { text-align: center; padding: 24px 0 36px; color: #8a6470; }
+
+      @media (max-width: 800px) {
+        .hero { grid-template-columns: 1fr; }
+        .section-grid { grid-template-columns: 1fr; }
+        .countdown { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="petals" aria-hidden="true">
+      <span style="left: 6%; animation-duration: 16s; animation-delay: 0s;"></span>
+      <span style="left: 18%; animation-duration: 18s; animation-delay: 1.2s;"></span>
+      <span style="left: 34%; animation-duration: 14s; animation-delay: 0.8s;"></span>
+      <span style="left: 50%; animation-duration: 17s; animation-delay: 2s;"></span>
+      <span style="left: 65%; animation-duration: 15s; animation-delay: 0.3s;"></span>
+      <span style="left: 80%; animation-duration: 19s; animation-delay: 1.4s;"></span>
+    </div>
+
+    <div class="page">
+      <section class="hero">
+        <div class="hero-card">
+          <h1 class="no-wrap">Happy 4th Anniversary Liz ❤️</h1>
+          <p>
+            I honestly can’t believe that it has already been 4 years. Looking back, we have come a long way, and I feel like we have grown so much as a couple. I know our relationship may not always be perfect, but we always find a way to overcome our hardships and work things out together.
+          </p>
+          <p>
+            Thank you for putting up with me, my attitude, and my dumb jokes. I love every moment I spend with you because you’re my biggest supporter and the only person I want to make memories with. I can’t wait to create even more memories with you in the future.
+          </p>
+          <p>
+            I hope to spend the rest of my life with you, continuing to make memories and supporting each other every step of the way. I love you &lt;3
+          </p>
+          <div class="countdown" id="countdown">
+            <div class="time-box"><span id="days">00</span><small>Days</small></div>
+            <div class="time-box"><span id="hours">00</span><small>Hours</small></div>
+            <div class="time-box"><span id="minutes">00</span><small>Minutes</small></div>
+            <div class="time-box"><span id="seconds">00</span><small>Seconds</small></div>
+          </div>
+          <div class="button-row">
+            <a class="btn btn-secondary" href="#note">Read my message</a>
+            <div style="display: flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; background: #fff; border: 1px solid #f3d7de;">
+              <p style="margin: 0; font-size: 0.95rem; font-weight: 600; color: var(--text);">Daydreams-chosic.com</p>
+              <audio controls autoplay muted loop preload="auto">
+                <source src="Daydreams-chosic.com_ (1).mp3" type="audio/mpeg">
+              </audio>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-card illustration" aria-hidden="true">
+          <iframe
+            src="https://giphy.com/embed/g3dqF7sTa56Ao"
+            width="220"
+            height="220"
+            style="border: 0; border-radius: 12px;"
+            frameBorder="0"
+            class="gif-art giphy-embed"
+            allowFullScreen
+          ></iframe>
+        </div>
+      </section>
+
+      <section class="section-grid">
+        <article class="card">
+          <h3>Your smile</h3>
+          <p>It feels like sunrise after a long, quiet night.</p>
+        </article>
+        <article class="card">
+          <h3>Your kindness</h3>
+          <p>You bring comfort and warmth wherever you go.</p>
+        </article>
+        <article class="card">
+          <h3>Our story</h3>
+          <p>Every chapter with you feels sweeter than the last.</p>
+        </article>
+      </section>
+
+      <section id="note" class="note">
+        <blockquote>
+          “Lizbeth, my love for you is soft, steady, and full of gratitude. I’m so happy to be walking this life with you,
+          and I cannot wait for our anniversary on 10/06.”
+        </blockquote>
+        <p style="margin-top: 12px;">You are my favorite dream, my sweetest comfort, and my forever.</p>
+      </section>
+    </div>
+
+    <footer>Made with love for Lizbeth Dimas 💗</footer>
+
+    <script>
+      const countdown = {
+        days: document.getElementById("days"),
+        hours: document.getElementById("hours"),
+        minutes: document.getElementById("minutes"),
+        seconds: document.getElementById("seconds")
+      };
+
+      function getNextAnniversary() {
+        const now = new Date();
+        const target = new Date(now.getFullYear(), 9, 6, 0, 0, 0);
+        if (target < now) target.setFullYear(target.getFullYear() + 1);
+        return target;
+      }
+
+      function updateCountdown() {
+        const now = new Date();
+        const target = getNextAnniversary();
+        const diff = target - now;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        countdown.days.textContent = String(days).padStart(2, "0");
+        countdown.hours.textContent = String(hours).padStart(2, "0");
+        countdown.minutes.textContent = String(minutes).padStart(2, "0");
+        countdown.seconds.textContent = String(seconds).padStart(2, "0");
+      }
+
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+      // Legacy WebAudio sample removed to avoid conflicts with the embedded audio element.
+    </script>
+  </body>
+</html>
